@@ -1,0 +1,40 @@
+class Solution(object):
+    def romanToInt(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
+        # 1. Map Roman symbols to their integer values.
+        roman_map = {
+            'I': 1,
+            'V': 5,
+            'X': 10,
+            'L': 50,
+            'C': 100,
+            'D': 500,
+            'M': 1000
+        }
+        
+        total = 0
+        
+        # 2. Iterate through the string, stopping before the last character.
+        # This allows us to safely look ahead at the next character (i+1).
+        for i in range(len(s) - 1):
+            current_value = roman_map[s[i]]
+            next_value = roman_map[s[i+1]]
+            
+            # Check for the subtractive rule.
+            # If the current symbol's value is LESS than the next symbol's value (e.g., 'I' before 'V'), 
+            # we subtract it from the total.
+            if current_value < next_value:
+                total -= current_value
+            # Otherwise, we add it to the total (additive rule).
+            else:
+                total += current_value
+                
+        # 3. Add the value of the last character.
+        # The loop stops one short, so the value of the last symbol must always be added.
+        # The last character can never be part of a subtractive pair.
+        total += roman_map[s[len(s) - 1]]
+        
+        return total
