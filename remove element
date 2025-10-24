@@ -1,0 +1,23 @@
+class Solution(object):
+    def removeElement(self, nums, val):
+        """
+        :type nums: List[int]
+        :type val: int
+        :rtype: int
+        """
+        # 'write_index' (or 'slow pointer') tracks where to place the next non-val element.
+        write_index = 0
+        
+        # 'read_index' (or 'fast pointer') iterates through the entire list.
+        for read_index in range(len(nums)):
+            # Check if the current element is NOT the value to be removed.
+            if nums[read_index] != val:
+                # If it's a value we want to keep, move it to the position 
+                # indicated by write_index (which is the next slot for a keeper).
+                nums[write_index] = nums[read_index]
+                
+                # Advance the write_index to prepare for the next keeper.
+                write_index += 1
+                
+        # The final position of write_index is the new length of the modified array.
+        return write_index
