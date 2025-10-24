@@ -1,0 +1,37 @@
+class Solution(object):
+    def longestCommonPrefix(self, strs):
+        """
+        :type strs: List[str]
+        :type strs: List[str]
+        :rtype: str
+        """
+        # Edge case: If the list is empty, there is no common prefix.
+        if not strs:
+            return ""
+        
+        # We assume the first string is the reference for the maximum possible prefix length.
+        first_string = strs[0]
+        
+        # Iterate through the characters of the first string. 'i' is the index (or character position).
+        for i in range(len(first_string)):
+            char = first_string[i]
+            
+            # Now, check this character 'char' against all other strings in the list.
+            # 'j' iterates through the list of strings starting from the second one (index 1).
+            for j in range(1, len(strs)):
+                # Two conditions for failure (and stopping the search):
+                
+                # 1. Check if the current string (strs[j]) is shorter than the current index 'i'.
+                #    If it is, we've gone past its length, so the prefix must stop here.
+                # OR
+                # 2. Check if the character at index 'i' in the current string 
+                #    does NOT match the character from the first string.
+                if i == len(strs[j]) or strs[j][i] != char:
+                    # If either is true, the longest common prefix is the substring
+                    # of the first string from the start up to the failed index 'i'.
+                    return first_string[:i]
+                    
+        # If the outer loop completes without returning, it means the entire 
+        # first string is the common prefix (e.g., ["flower", "flow", "f"]) or
+        # the only string (e.g., ["a"]).
+        return first_string
