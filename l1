@@ -1,0 +1,31 @@
+class Solution(object):
+    def twoSum(self, nums, target):
+        """
+        :type nums: List[int]
+        :type target: int
+        :rtype: List[int]
+        """
+        # A dictionary to store the number and its index.
+        # Format: {number: index}
+        num_map = {} 
+
+        # Iterate through the list of numbers.
+        # 'i' is the current index, 'num' is the current value.
+        for i, num in enumerate(nums):
+            # Calculate the required complement needed to reach the target.
+            complement = target - num
+
+            # Check if the complement already exists in our dictionary.
+            if complement in num_map:
+                # If it exists, we've found the two numbers.
+                # The result is the index of the complement and the current index 'i'.
+                return [num_map[complement], i]
+            
+            # If the complement isn't found, add the current number and its index
+            # to the map for future lookups.
+            num_map[num] = i
+        
+        # This part should ideally not be reached if a solution is guaranteed to exist.
+        # Return an empty list or raise an error if no solution is found.
+        return []
+    
