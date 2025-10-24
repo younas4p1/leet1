@@ -1,0 +1,53 @@
+class Solution(object):
+    def threeSum(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[List[int]]
+        """
+        results = []
+        # 1. Sort the array. This is crucial for the Two Pointers approach and skipping duplicates.
+        nums.sort()
+        n = len(nums)
+        
+        # Iterate through the array. 'i' is the index for the first element 'a'.
+        for i in range(n - 2):
+            # Skip duplicate values for 'a'. 
+            # If the current 'a' is the same as the previous one, we skip it.
+            if i > 0 and nums[i] == nums[i-1]:
+                continue
+            
+            # 2. Set up the Two Pointers for the remaining part of the array.
+            # 'left' is the index for the second element 'b'.
+            # 'right' is the index for the third element 'c'.
+            left, right = i + 1, n - 1
+            
+            # The target for the remaining two elements is 0 - nums[i].
+            target = 0 - nums[i]
+            
+            while left < right:
+                current_sum = nums[left] + nums[right]
+                
+                if current_sum == target:
+                    # Found a triplet!
+                    results.append([nums[i], nums[left], nums[right]])
+                    
+                    # 3. Handle duplicates for 'b' and 'c'.
+                    # Move 'left' past any duplicates.
+                    while left < right and nums[left] == nums[left + 1]:
+                        left += 1
+                    # Move 'right' past any duplicates.
+                    while left < right and nums[right] == nums[right - 1]:
+                        right -= 1
+                    
+                    # Move both pointers inward to look for new unique pairs.
+                    left += 1
+                    right -= 1
+                    
+                elif current_sum < target:
+                    # Sum is too small, need a larger 'b'. Move 'left' pointer right.
+                    left += 1
+                else: # current_sum > target
+                    # Sum is too large, need a smaller 'c'. Move 'right' pointer left.
+                    right -= 1
+                    
+        return results
